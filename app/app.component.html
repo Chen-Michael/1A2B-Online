@@ -1,0 +1,57 @@
+<div *ngIf="isLogin == false" class="login">
+    <input type="text"     [(ngModel)]="acc" id="acc" placeholder="帳號" required="required" />
+    <input type="password" [(ngModel)]="pas" id="pas" placeholder="密碼" required="required" />
+    <button class="btn blue" (click)="login()">登入</button>
+    <button class="btn blue" (click)="register()">註冊</button>
+    <h3 *ngIf="err != ''" class="error-message">{{err}}</h3>
+</div>
+<div *ngIf="isLogin == true" class="container color-white main">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 game-title">
+            1A2B Level {{game.level}}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 answer-history-div">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 game-title">
+                線索列表
+            </div>
+            <div class="history-div" id="history_div">
+                <table class="answer-history">
+                    <tr *ngFor="let obj of game.history">
+                        <td>{{obj.answer}}</td>
+                        <td>{{obj.a}}A{{obj.b}}B</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 user-list-upper-div">
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-12 col-lg-12 user-list-div">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 game-title">
+                        線上名單
+                    </div>
+                    <table class="user-list">
+                        <tr *ngFor="let name of user; let i = index" [ngClass]="{red: i == nowPlayer}">
+                            <td>{{name}}</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-12 col-lg-12 answer-place-div">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 game-title">
+                        作答區
+                    </div>
+                    <input 
+                        type="text" 
+                        id="answer_input"
+                        [disabled]="!myTurn" 
+                        [(ngModel)]="answer" 
+                        (keypress)="keypressEvent($event)" 
+                        class="answer-input" />
+                    <br /><br />
+                    <button [disabled]="!myTurn" class="btn blue" (click)="send()">送出</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
